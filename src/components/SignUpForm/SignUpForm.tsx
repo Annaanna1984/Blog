@@ -20,7 +20,6 @@ const SignUpForm = () => {
 
     const onSubmit = (data: SignUpInputForm) => {
         dispatch(fetchRegister({ email: data.email, password: data.password, username: data.username })).then((e) => {
-            console.log(e);
             if (e.meta.requestStatus === 'rejected') {
                 const errs: string[] = [];
                 if (e.payload?.email) {

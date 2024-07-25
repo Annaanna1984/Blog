@@ -52,7 +52,6 @@ export const fetchPosts = createAsyncThunk<FetchPost, GetAllPayload, { rejectVal
             }
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -76,7 +75,6 @@ export const fetchArticle = createAsyncThunk<Article, FetchArticlePayload, { rej
             }
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -110,7 +108,6 @@ export const fetchUser = createAsyncThunk<User, LoginPayload, { rejectValue: Une
             body: JSON.stringify({ user: payload })
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -162,7 +159,6 @@ export const getCurrentUser = createAsyncThunk<User, string, { rejectValue: Unex
             }
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -194,7 +190,6 @@ export const updateCurrentUser = createAsyncThunk<User, CurrentUserPayload, { re
             body: JSON.stringify({ user: payload.userData })
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -216,7 +211,6 @@ export const createArticle = createAsyncThunk<Article, ArticlePayload, { rejectV
             body: JSON.stringify({ article: payload.articleData })
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -238,7 +232,6 @@ export const editArticle = createAsyncThunk<Article, ArticlePayload, { rejectVal
             body: JSON.stringify({ article: payload.articleData })
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -265,7 +258,6 @@ export const deleteArticle = createAsyncThunk<Article, ArticlePayload, { rejectV
             }
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -289,7 +281,6 @@ export const addLike = createAsyncThunk<Article, LikePayload, { rejectValue: Une
             }
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }
@@ -307,7 +298,6 @@ export const deleteLike = createAsyncThunk<Article, LikePayload, { rejectValue: 
             }
         });
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             return rejectWithValue(data.errors);
         }

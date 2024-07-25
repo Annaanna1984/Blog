@@ -35,7 +35,6 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ ...props }) => {
     const token = getToken();
 
     const onSubmit = (data: ArticleInputForm) => {
-        console.log(data);
         props.edit
             ? dispatch(
                   editArticle({
