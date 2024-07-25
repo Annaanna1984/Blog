@@ -1,0 +1,25 @@
+.postList {
+    list-style-type: none;
+    margin: 0;
+    padding: 20px 0 0;
+}
+
+.postLink a {
+    text-decoration: none;
+}
+.spin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+.pagination {
+    //display: block;
+    //margin-left: auto;
+    //margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
