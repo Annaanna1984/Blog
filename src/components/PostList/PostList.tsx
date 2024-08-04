@@ -5,10 +5,10 @@ import { Article, changePage, fetchPosts, getToken } from '../../store/reducer/b
 import { Spin, Pagination } from 'antd';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { _posts } from '../../constants';
 
 export const PostList = () => {
     const posts = useAppSelector<Article[]>((state) => state.blogReducer.posts);
-    console.log(posts);
     const { status, totalCount, currentPage } = useAppSelector((state) => state.blogReducer);
     const dispatch = useAppDispatch();
     const token = getToken();
@@ -26,10 +26,9 @@ export const PostList = () => {
             <ul className={style.postList}>
                 {status === 'loading' && <Spin className={style.spin} size="large" />}
                 {posts?.map((post: Article) => {
-                    console.log(post);
                     return (
                         <li className={style.postLink} key={post.slug}>
-                            <Link to={`/posts/${post.slug}`} key={post.slug}>
+                            <Link to={`${_posts}${post.slug}`} key={post.slug}>
                                 <Post post={post} fullText={false} />
                             </Link>
                         </li>

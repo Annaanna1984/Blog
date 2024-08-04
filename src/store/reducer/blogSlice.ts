@@ -98,7 +98,6 @@ type User = {
 export const fetchUser = createAsyncThunk<User, LoginPayload, { rejectValue: UnexpectedError }>(
     'users/fetchUser',
     async function (payload, { rejectWithValue }) {
-        console.log(`#### postSlice.ts inside`);
         const response = await fetch(`${baseURL}users/login`, {
             method: 'POST',
             headers: {
@@ -200,7 +199,6 @@ export const updateCurrentUser = createAsyncThunk<User, CurrentUserPayload, { re
 export const createArticle = createAsyncThunk<Article, ArticlePayload, { rejectValue: UnexpectedError }>(
     'article/createArticle',
     async function (payload, { rejectWithValue }) {
-        console.log('payload ' + payload.articleData);
         const response = await fetch(`${baseURL}articles`, {
             method: 'POST',
             headers: {
@@ -221,7 +219,6 @@ export const createArticle = createAsyncThunk<Article, ArticlePayload, { rejectV
 export const editArticle = createAsyncThunk<Article, ArticlePayload, { rejectValue: UnexpectedError }>(
     'article/editArticle',
     async function (payload, { rejectWithValue }) {
-        console.log('payload ' + payload.articleData);
         const response = await fetch(`${baseURL}articles/${payload.slug}`, {
             method: 'PUT',
             headers: {
@@ -273,7 +270,6 @@ type LikePayload = {
 export const addLike = createAsyncThunk<Article, LikePayload, { rejectValue: UnexpectedError }>(
     'article/addLike',
     async function (payload, { rejectWithValue }) {
-        console.log(payload);
         const response = await fetch(`${baseURL}articles/${payload.slug}/favorite`, {
             method: 'POST',
             headers: {
@@ -345,7 +341,6 @@ const blogSlice = createSlice({
         });
         builder.addCase(fetchPosts.fulfilled, (state, action) => {
             state.status = 'resolved';
-            console.log(action.payload);
             state.posts = action.payload.articles;
             state.totalCount = action.payload.articlesCount;
         });
@@ -380,17 +375,14 @@ const blogSlice = createSlice({
             state.posts[idx] = action.payload;
         });
         builder.addCase(deleteArticle.fulfilled, (state, action) => {
-            console.log(action);
             const idx = state.posts.findIndex((e) => e.slug === action.payload.slug);
             state.posts = state.posts.slice(0, idx).concat(state.posts.slice(idx, state.posts.length));
         });
         builder.addCase(addLike.fulfilled, (state, action) => {
-            console.log(action);
             const idx = state.posts.findIndex((e) => e.slug === action.payload.slug);
             state.posts[idx] = action.payload;
         });
         builder.addCase(deleteLike.fulfilled, (state, action) => {
-            console.log(action);
             const idx = state.posts.findIndex((e) => e.slug === action.payload.slug);
             state.posts[idx] = action.payload;
         });

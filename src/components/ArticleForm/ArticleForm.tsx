@@ -138,12 +138,11 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ ...props }) => {
 
                 <label htmlFor="text">
                     Text
-                    <input
+                    <textarea
                         {...register('text', {
                             required: REQUIRED_FIELD_MESSAGE
                         })}
                         id="text"
-                        type="text"
                         placeholder="Text"
                         className={style.text}
                     />

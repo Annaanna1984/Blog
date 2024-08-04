@@ -16,7 +16,6 @@ const PostWrapper = () => {
 
     const getPost = useCallback(() => {
         const selectorPost = posts.find((e) => e.slug === slug);
-        console.log(selectorPost);
         if (selectorPost) {
             setPost(selectorPost);
             setLoading(false);

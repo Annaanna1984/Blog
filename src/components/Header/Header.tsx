@@ -1,41 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { getCurrentUser, getToken, logOut } from '../../store/reducer/blogSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import avatar from '../../assets/img.png';
+import { _basePath, newArticle, profile, signIn, signUp } from '../../constants';
 
 const Header: React.FC = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.blogReducer.user);
-    console.log(user);
     const authorized = useAppSelector((state) => state.blogReducer.authorized);
-    console.log(`#### Header.tsx authorized = ${authorized}`);
 
     const { username, image } = user;
-    console.log(`#### Header.tsx image = ${image}`);
+    const [userImage, setUserImage] = useState('');
 
     useEffect(() => {
         const token = getToken();
         if (token) {
             dispatch(getCurrentUser(token));
         }
-    }, [authorized, dispatch]);
+        setUserImage(image ? image : avatar);
+    }, [authorized, dispatch, image]);
 
     return (
         <header className={style.header}>
-            <Link to="/" className={style.title}>
+            <Link to={_basePath} className={style.title}>
                 Realworld Blog
             </Link>
             {authorized ? (
                 <div className={style.authorisation}>
-                    <Link to={`/new-article`}>
+                    <Link to={newArticle}>
                         <button className={style.createArticle}>Create article</button>
                     </Link>
-                    <Link to={`/profile`}>
+                    <Link to={profile}>
                         <div className={style.username}>{username}</div>
                     </Link>
-                    <Link to={`/profile`}>
-                        <img className={style.photo} alt={'avatar'} src={image} />
+                    <Link to={profile}>
+                        <img
+                            src={userImage}
+                            alt="avatar"
+                            className={style.photo}
+                            onError={(err) => {
+                                console.log(err);
+                                setUserImage(avatar);
+                            }}
+                        />
                     </Link>
                     <button
                         className={style.logOut}
@@ -49,10 +58,10 @@ const Header: React.FC = () => {
                 </div>
             ) : (
                 <div className={style.authorisation}>
-                    <Link to={`/sign-in`}>
+                    <Link to={signIn}>
                         <button className={style.signIn}>Sign in</button>
                     </Link>
-                    <Link to={`/sign-up`}>
+                    <Link to={signUp}>
                         <button className={style.signUp}>Sign Up</button>
                     </Link>
                 </div>

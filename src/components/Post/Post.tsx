@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './Post.module.scss';
 import Markdown from 'react-markdown';
 import { Link, useHistory } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { addLike, Article, deleteArticle, deleteLike, getToken } from '../../sto
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import avatar from '../../assets/img.png';
+import { articles } from '../../constants';
 
 interface PostProps {
     post: Article;
@@ -14,8 +15,6 @@ interface PostProps {
 }
 
 export const Post: React.FC<PostProps> = ({ ...props }) => {
-    console.log(props);
-
     const dispatch = useAppDispatch();
     const token = getToken();
     const history = useHistory();
@@ -24,6 +23,7 @@ export const Post: React.FC<PostProps> = ({ ...props }) => {
     const fullText = props.fullText;
     const { username, image } = props.post.author;
     const { tagList, body, title, favoritesCount, description, createdAt, slug, favorited } = props.post;
+    const [userImage, setUserImage] = useState(image);
 
     const currentUserIsAuthor = username === currentUser.username;
 
@@ -34,19 +34,17 @@ export const Post: React.FC<PostProps> = ({ ...props }) => {
     };
 
     const confirmDelete: PopconfirmProps['onConfirm'] = async () => {
-        const result = await dispatch(
+        await dispatch(
             deleteArticle({
                 token: token,
                 slug: slug
             })
         );
-
-        console.log(result);
         history.push('/');
     };
 
     const clickLike = () => {
-        console.log(`#### Post.tsx clicked like`);
+        if (!token) return;
         dispatch(
             addLike({
                 token: token,
@@ -103,7 +101,7 @@ export const Post: React.FC<PostProps> = ({ ...props }) => {
                     <div className={style.name}>{username}</div>
                     <div className={style.date}>{formatDate(createdAt)}</div>
                 </div>
-                <img src={image ? image : avatar} alt="avatar" className={style.photo} />
+                <img src={userImage} alt="avatar" className={style.photo} onError={() => setUserImage(avatar)} />
                 {fullText && (
                     <div className={style.buttonBlock}>
                         <Popconfirm
@@ -114,20 +112,10 @@ export const Post: React.FC<PostProps> = ({ ...props }) => {
                             cancelText="No"
                             placement={'rightTop'}
                         >
-                            <button
-                                className={currentUserIsAuthor ? style.delete : style.disabled}
-                                disabled={!currentUserIsAuthor}
-                            >
-                                Delete
-                            </button>
+                            {currentUserIsAuthor && <button className={style.delete}>Delete</button>}
                         </Popconfirm>
-                        <Link to={`/articles/${slug}/edit`} key={slug}>
-                            <button
-                                className={currentUserIsAuthor ? style.edit : style.disabled}
-                                disabled={!currentUserIsAuthor}
-                            >
-                                Edit
-                            </button>
+                        <Link to={`${articles}${slug}/edit`} key={slug}>
+                            {currentUserIsAuthor && <button className={style.edit}>Edit</button>}
                         </Link>
                     </div>
                 )}

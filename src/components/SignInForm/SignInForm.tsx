@@ -5,6 +5,7 @@ import { fetchUser } from '../../store/reducer/blogSlice';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/hooks';
 import { Alert } from 'antd';
+import { signUp } from '../../constants';
 
 type SignInInputForm = {
     email: string;
@@ -80,7 +81,7 @@ const SignInForm = () => {
                         className={isValid ? style.validButton : style.invalidButton}
                     />
                     <div className={style.already}>
-                        Don&apos;t have an account? <Link to={`/sign-up`}>Sign Up.</Link>
+                        Don&apos;t have an account? <Link to={signUp}>Sign Up.</Link>
                     </div>
                 </form>
             </div>

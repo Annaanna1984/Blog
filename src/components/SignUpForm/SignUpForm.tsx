@@ -5,6 +5,7 @@ import { fetchRegister } from '../../store/reducer/blogSlice';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Alert } from 'antd';
+import { signIn } from '../../constants';
 
 type SignUpInputForm = {
     email: string;
@@ -170,7 +171,7 @@ const SignUpForm = () => {
                     />
                     <div className={style.already}>
                         Already have an account?
-                        <Link to={`/sign-in`}>Sign In.</Link>
+                        <Link to={signIn}>Sign In.</Link>
                     </div>
                 </form>
             </div>
